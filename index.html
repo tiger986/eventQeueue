@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        .box{
+            width: 600px;
+            margin: 120px auto 0;
+            overflow: hidden;
+        }
+        .box p{
+            width: 50px;
+            height: 50px;
+            float: left;
+            margin: 20px 20px 0 0;
+            background-color: #209eea;
+            cursor: pointer;
+            font-size: 16px;
+            color: #ffffff;
+            line-height: 50px;
+            text-align: center;
+            border-radius: 6px;
+        }
+        .box p:hover{
+            background-color: #38b4ff;
+        }
+    </style>
+</head>
+<body>
+    <div class="box">
+        <p>任务0</p>
+        <p>任务1</p>
+        <p>任务2</p>
+        <p>任务3</p>
+        <p>任务4</p>
+    </div>
+</body>
+
+<script src="jquery-1.10.1.min.js"></script>
+<script>
+    var taskArr = [];
+    var timer = null;
+    var done = null;
+    var flag = 1;
+    $(".box").find("p").click(function(){
+        var n = $(this).index();
+        var m = n * 1000;    
+        var fun = function(){
+            setTimeout(function(){
+                console.log(n + "---" + m); 
+                flag = 1;
+            }, m);          
+        }
+        taskArr.push(fun);
+    });
+
+    function go(){
+        flag = 0;
+        done = taskArr.shift();
+        done();
+    }
+
+    setInterval(function(){
+        if(taskArr.length && flag){
+            go();
+        }
+    }, 100);
+</script>
+
+</html>
